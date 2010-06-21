@@ -1,0 +1,29 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                                       Board.index
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Sound manager
+GET     /sounds                                 Sounds.listSounds
+GET     /sound/{soundId}                        Sounds.getFile
+GET     /sound/{soundId}/info                   Sounds.getSoundInfo
+GET     /tags                                   Sounds.listTags
+GET     /tag/{tagId}/info                       Sounds.getTagInfo
+GET     /tag/{tagId}/sounds                     Sounds.listSounds
+
+PUT     /tag/{tagId}/sounds/{soundId}           Sounds.tagSound
+DELETE  /tag/{tagId}/sounds/{soundId}           Sounds.untagSound
+POST    /sounds                                 Sounds.addSounds
+
+#Auth
+POST    /auth/login                             Auth.login
+POST    /auth/create                            Auth.createUser
+GET     /auth/logout                            Auth.logout
+
+# Catch all
+#*       /{controller}/{action}                  {controller}.{action}

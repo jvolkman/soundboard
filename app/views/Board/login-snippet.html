@@ -1,0 +1,59 @@
+<div id="login">
+	<h3>
+	Without logging in, you can only play locally.
+	</h3> 
+	<div id="loginTabs">
+		<ul>
+			<li id="loginTab-1"><a href="#loginTabs-1">Existing user</a></li>
+			<li><a href="#loginTabs-2">New user</a></li>
+		</ul>
+		<div id="loginTabs-1">
+			#{form @Auth.login(), id:'loginForm' }
+				<fieldset>
+         			<div id="loginUsernameError" class="loginError"></div>
+      				<p>
+						<label class="loginLabel">Username</label>
+						<input type="text" name="username" required="required" />
+					</p>
+         			<div id="loginPasswordError" class="loginError"></div>
+      				<p>
+         				<label class="loginLabel">Password</label>
+         				<input type="password" name="password" required="required" />
+      				</p>
+      				<p>
+      					<label>Remember me</label>
+      					<input type="checkbox" name="remember"/>   
+	  				</p>
+      				<div id="loginMessage" class="loginErrorMessage"></div>
+      				<input type="submit" value="Login" />
+				</fieldset>
+			#{/form}
+		</div>
+		<div id="loginTabs-2">
+			#{form @Auth.createUser() , id:'createUserForm' }
+				<fieldset>
+         			<div id="createUserUsernameError" class="loginError"></div>
+      				<p>
+						<label class="loginLabel">Username</label>
+						<input type="text" name="username" required="required" />
+					</p>
+         			<div id="createUserPasswordError" class="loginError"></div>
+      				<p>
+         				<label class="loginLabel">Password</label>
+         				<input type="password" name="password" required="required" />
+      				</p>
+      				<p>
+         				<label class="loginLabel">Confirm</label>
+         				<input type="password" name="passwordConfirm" required="required" />
+      				</p>
+      				<p>
+      					<label>Remember me</label>
+      					<input type="checkbox" name="remember"/>   
+	  				</p>
+      				<div id="createUserMessage" class="loginErrorMessage"></div>
+      				<input type="submit" value="Create" />
+				</fieldset>	
+			#{/form}
+		</div>
+	</div>
+</div>

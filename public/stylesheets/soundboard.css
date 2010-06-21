@@ -1,0 +1,181 @@
+/* Common stuff */
+
+div.clear {
+	clear: both;
+}
+
+div.clear-left {
+	clear: left;
+}
+
+div.clear-right {
+	clear: right;
+}
+
+fieldset {
+	border-width: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.disabled-label {
+	color: #aaa;
+}
+
+/* Override large fonts from jquery ui */
+.ui-widget {
+	font-size: 12px !important;
+}
+
+html, body {	
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font: 100% "Verdana", sans-serif;
+	overflow: hidden;
+}
+
+#main {
+	height: 100%;
+	position: relative;
+}
+
+#content, #remote {
+	padding: 5px;
+}
+
+#content {
+	background-color: #fff;
+}
+
+/* Fun fade-in effect */
+.initfadein {
+	opacity: 0;
+}
+
+.title {
+	background-color: #eee;
+	padding: 5px;
+}
+
+.title-border-top {
+	border-top: 1px solid #aaa;
+}
+
+.title-border-bottom {
+	border-bottom: 1px solid #aaa;
+}	
+
+#header {
+	font-size: 18px;
+}
+
+#headerLeft {
+	float: left;
+}
+
+#headerRight {
+	float: right;
+}
+
+#header a {
+	color: #aaa;
+	text-decoration: none;
+}
+
+#header a:hover {
+	text-decoration: underline;
+}
+
+#header a:visited {
+	color: #aaa;
+}
+
+#managerContainer {
+	overflow: hidden;
+	display: none;
+}
+
+
+#content {
+	overflow: auto;
+}
+
+#footer {
+	font-size: 14px;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}
+
+/* Login window */
+
+#login {
+	display: none;
+}
+
+#login .loginLabel {
+	float: left;
+	width: 5em;
+	margin-right: 0.5em;
+	display: block
+}
+
+#login .loginError {
+	color: red;
+	font-weight: bold;
+}
+
+/* Soundboard */
+
+#sounds .ui-button {
+	margin: 2px;
+}
+
+/* Events */
+
+#remoteContainer {
+	height: 200px;
+	display: none;
+	overflow: hidden;
+}
+
+#remote {
+	background-color: #F0F8FF;
+	overflow: auto;
+}
+
+#remoteToggle {
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	opacity: 0;
+}
+
+#remoteTitle {
+	font-size: 0.9em;
+	cursor: n-resize;
+}
+
+#users, #events {
+	overflow: auto;
+}
+
+#users {
+	height: 100%;
+	background-color: green;
+}
+
+#events {
+	height: 100%;
+	background-color: red;
+}
+
+.vsplitbar {
+	width: 5px;
+	background: #aaa;
+}
