@@ -1,4 +1,8 @@
 /*
+ * goVertical
+ * Author: Jeremy Volkman <jvolkman@gmail.com>
+ * 
+ * 
  * jQuery plugin which stretches a div to reach another div below it.
  * Usage:
  *   $(selector).goVertical({boundary: div});
@@ -36,7 +40,7 @@ function doit(args) {
 
 $.fn.goVertical = function(args) {
     if ($.relayout) {
-        this.relayout("govertical", function() {
+        this.setRelayout("govertical", function() {
             doit.call($(this), args);
         });
     }
