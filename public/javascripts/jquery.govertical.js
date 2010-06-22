@@ -1,8 +1,14 @@
 /*
  * jQuery plugin which stretches a div to reach another div below it.
- * usage: $(selector).govertical([div1, div2, ...])
+ * Usage:
+ *   $(selector).goVertical({boundary: div});
+ * OR 
+ *   $(selector).goVertical({boundary: [div1, div2, ...]}) 
+ *   (divs will be tried in order. The first one wins.)
  * 
- * divs will be tried in order. The first one wins.
+ * Options: 
+ *   includeMargins: include margins in calculations (default: true)
+ * 
  */
 (function($){
 /* this: a jQuery object */
