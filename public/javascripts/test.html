@@ -1,0 +1,67 @@
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery.govertical.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery.relayout.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		var content = $("#content");
+		var fn = function() {
+			content.govertical("#remote");
+		}
+		fn();
+//		$(window).resize(fn);
+	});
+</script>
+
+<style TYPE="text/css">
+html, body {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+#head {
+    background-color: red;
+border: 1px solid black;
+padding: 5px;
+}
+
+#organizer {
+    background-color: green;
+}
+
+#content {
+    min-height: 50%;
+    background-color: orange;
+	margin: 5px;
+}
+
+#bottom {
+    width: 100%; 
+    position: fixed; 
+    bottom: 0px;
+}
+
+#remote {
+    background-color: red;
+	margin: 5px;
+}
+
+#footer {
+    background-color: yellow;
+}
+</style>
+</head>
+<body>
+<div id="head">Header</div>
+<div id="organizer">Organizer</div>
+<div id="content"></div>
+
+<div id="bottom">
+<div id="remote">Remote</div>
+<div id="footer">Footer</div>
+</div>
+</body>
+</html>
