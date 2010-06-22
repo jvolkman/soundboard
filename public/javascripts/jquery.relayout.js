@@ -6,7 +6,7 @@ $.fn.relayout = function(namespace, handler) {
             var $this = $(this);
             var handlers = $this.data("relayout.handlers");
             if (!handlers) {
-                handlers = {}
+                handlers = {};
                 $this.data("relayout.handlers", handlers);
             }
             handlers[namespace] = handler;

@@ -19,7 +19,7 @@ function doit(boundaries) {
             }
         }
     });
-}
+};
 
 $.fn.govertical = function(boundaries) {
     if (boundaries) {
