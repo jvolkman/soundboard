@@ -5,35 +5,40 @@
  * divs will be tried in order. The first one wins.
  */
 (function($){
-/* takes a jQuery object */
-function doit(boundaries) {
+/* this: a jQuery object */
+function doit(args) {
     return this.each(function() {
         var $this = $(this);
-        var from = $this.offset().top + $this.outerHeight(false) + parseInt($this.css("margin-bottom"));
-        for (var i in boundaries) {
-            var el = $(boundaries[i]);
-            if (el.is(":visible")) {
-                var to = el.offset().top - parseInt(el.css("margin-top"));
-                $this.height($this.height() + (to - from));
-                break;
-            }
+        args = $.extend({}, $.fn.goVertical.defaults, args);
+        if ($.metadata) {
+            $.extend(args, $this.metadata());
         }
+        if (args && args.boundary) {
+            var boundary = args.boundary instanceof Array ? args.boundary : [args.boundary];
+            var from = $this.offset().top + $this.outerHeight(false) + (args.includeMargins ? parseInt($this.css("margin-bottom")) : 0);
+            for (var i in boundary) {
+                var el = $(boundary[i]);
+                if (el.is(":visible")) {
+                    var to = el.offset().top - (args.includeMargins ? parseInt(el.css("margin-top")) : 0);
+                    $this.height($this.height() + (to - from));
+                    break;
+                }
+            }
+        }            
     });
 };
 
-$.fn.govertical = function(boundaries) {
-    if (boundaries) {
-        if (!(boundaries instanceof Array)) {
-            boundaries = [boundaries];
-        }
-        if ($.fn.relayout) {
-            this.each(function() {
-                $(this).relayout("govertical", function() {
-                    doit.call($(this), boundaries);
-                });
-            });
-        }
-        return doit.call(this, boundaries);
+$.fn.goVertical = function(args) {
+    if ($.relayout) {
+        this.relayout("govertical", function() {
+            doit.call($(this), args);
+        });
     }
+    return doit.call(this, args);
 };
+
+$.fn.goVertical.defaults = {
+    includeMargins: true
+};
+
 })(jQuery);
