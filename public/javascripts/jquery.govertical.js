@@ -40,7 +40,7 @@ function doit(args) {
 
 $.fn.goVertical = function(args) {
     if ($.relayout) {
-        this.setRelayout("govertical", function() {
+        this.relayout("govertical", function() {
             doit.call($(this), args);
         });
     }
