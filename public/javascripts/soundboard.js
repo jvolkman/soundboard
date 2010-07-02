@@ -4,10 +4,10 @@
 var relayout;
 
 $(function(){
-    var _header = $("#header");
-    var _content = $("#content");
-    var _footer = $("#footer");
-    var _main = $("#main");
+    var _header = $("#sb-header");
+    var _content = $("#sb-content");
+    var _footer = $("#sb-footer");
+    var _main = $("#sb-main");
     
     relayout = function() {
         _content.height(_main.outerHeight(true) - _header.outerHeight(true) - _footer.outerHeight(true) - (_content.outerHeight(true) - _content.height()));
@@ -15,63 +15,65 @@ $(function(){
     relayout();
     $(window).resize(relayout);
 
-    $("#loginButton").click(showLogin);
-    $("#loginForm").submit(doLogin);
-    $("#createUserForm").submit(doCreateUser);
-
-    // Show initial fadein for header and footer
-    $("body").bind("mouseover.initfadein", function() {
-    	$("#header, #footer").delay(100).animate({opacity: 1}, {duration: 1500 }); 
-    	$("body").unbind("mouseover.initfadein");
+    $("#sb-header-toolbar-btn-volume").button({text: false, icons:{primary: "ui-icon-volume-on"}}).click(function(){
     });
+    $("#sb-header-toolbar-btn-remote").button({text: false, icons:{primary: "ui-icon-signal-diag"}});
+    $("#sb-header-toolbar-btn-add").button({text: false, icons:{primary: "ui-icon-plus", secondary: "ui-icon-triangle-1-s"}});
+    $("#sb-header-toolbar a").button({ text: false});
+    $("#sb-login-button").click(showLogin);
+    $("#sb-login-form").submit(doLogin);
+    $("#sb-create-user-form").submit(doCreateUser);
+    
 });
 
 /* Header area */
 
 function showLogin() {
-    $("#login button").button();
-    $("#loginTabs").tabs({
+    $("#sb-login button").button();
+    $("#sb-login-tabs").tabs({
         show: function() {
-            $("#login :input:text:visible:first").focus();
+            $("#sb-login :input:text:visible:first").focus();
         }
     });
-    $("#login").dialog({
+    $("#sb-login").dialog({
         modal: true,
         draggable: false,
         resizable: false,
         width: "400px",
         title: "Login",
     });
-    $("#login :input:text:visible:first").focus();
+    $("#sb-login :input:text:visible:first").focus();
 }
 
 function doLogin() {
-    $.post($("#loginForm").attr("action"), $("#loginForm").serialize(), function(data) {
+    $.post($("#sb-login-form").attr("action"), $("#sb-login-form").serialize(), function(data) {
         if (data.result) {
             window.location.reload();
         } else {
-            $(".loginError").text("");
+            $("#sb-login .sb-validation-box").hide();
             if (data.type == "InvalidUsername") {
-                $("#loginUsernameError").text("Invalid username");
+                $("#sb-login-error-box .sb-validation-text").text("Invalid username");
             } else if (data.type == "InvalidPassword") {
-                $("#loginPasswordError").text("Invalid password");
+                $("#sb-login-error-box .sb-validation-text").text("Invalid password");
             }
+            $("#sb-login-error-box").show();
         }
     }, "json");
     return false;
 }
 
 function doCreateUser() {
-    $.post($("#createUserForm").attr("action"), $("#createUserForm").serialize(), function(data) {
+    $.post($("#sb-create-user-form").attr("action"), $("#sb-create-user-form").serialize(), function(data) {
         if (data.result) {
             window.location.reload();
         } else {
-            $(".loginError").text("");
+            $("#sb-login .sb-validation-box").hide();
             if (data.type == "InvalidUsername") {
-                $("#createUserUsernameError").text("User already exists");
+                $("#sb-create-user-error-box .sb-validation-text").text("User already exists");
             } else if (data.type == "InvalidPassword") {
-                $("#createUserPasswordError").text("Passwords don't match");
+                $("#sb-create-user-error-box .sb-validation-text").text("Passwords don't match");
             }
+            $("#sb-create-user-error-box").show();
         }
     }, "json");
     return false;

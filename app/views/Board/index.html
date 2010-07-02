@@ -7,7 +7,7 @@
 
 		<!-- Styles -->
         <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/soundboard.css'}" />
-        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/smoothness/jquery-ui-1.8.2.custom.css'}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/ui-darkness/jquery-ui-1.8.2.custom.css'}" />
 
 		<!-- Scripts -->
 		<!-- jQuery -->
@@ -22,31 +22,32 @@
 		<!-- App -->
         <script src="@{'/public/javascripts/soundboard.js'}" type="text/javascript" charset="utf-8"></script>
 
-		#{if user}<script type="text/javascript" charset="utf-8">var _username="${user.username}"</script>#{/if}
+		#{if user}<script type="text/javascript">var _username="${user.username}"</script>#{/if}
     </head>
     <body>
-		<div id="main">
-    	<div id="header" class="title title-border-bottom#{if !user} initfadein#{/if}">
-		<div id="headerLeft">
-		Shantytown Soundboard
+		<div id="sb-main">
+    	<header class="title-border-bottom ui-helper-clearfix ui-corner-bottom ui-widget-header" style="border-width: 0px;">
+		<div id="sb-header-left" class="sb-title">
+		<div class="sb-title-image"></div>
+		<div class="sb-title-text">Shantytown Soundboard</div>
 		</div>
-		<div id="headerRight">
+		<div id="sb-header-right">
+		<div>
     	#{if user}
 		${user.username} | <a href="@{Auth.logout()}">Logout</a>
 		#{/if}
 		#{else}
-		<a href="#" id="loginButton">Login</a>
+		<a href="#" id="sb-login-button">Login</a>
 		#{/else}
 		</div>
-		<div class="clear"></div>
-		<div id="managerContainer">
-		<div id="managerSlider" class="ui-resizable-handle ui-resizable-n" style="-moz-user-select: none;"></div>
-		<div id="manager">
-		Hello
-		</div>
-		</div>
-    	</div> <!-- header -->
-		<div id="content">
+		</div> <!-- sb-header-right -->
+		<ul class="sb-toolbar ui-corner-all" style="background-color: #FFFFFF;">
+		<li><input type="checkbox" id="sb-header-toolbar-btn-volume" title="Play sounds" /><label for="sb-header-toolbar-btn-volume">Play sounds</label></li> 
+		<li><input type="checkbox" id="sb-header-toolbar-btn-remote" title="DistribuPlay™" /><label for="sb-header-toolbar-btn-remote">DistribuPlay™</label></li>
+		<li><a href="#" id="sb-header-toolbar-btn-add" title="Add...">Add...</a></li>
+		</ul> <!-- sb-header-toolbar -->
+    	</header> <!-- sb-header -->
+		<div id="sb-content">
 		<div id="sounds">
 		</div>
 		#{if user}
@@ -57,18 +58,11 @@
 			#{/form}
 		</div>
 		#{/if}
-		</div> <!-- content -->		
+		</div> <!-- sb-content -->		
 		
 		<!-- footer - contains remote stuff -->
 
-		<div id="footer"#{if !user} class="initfadein"#{/if}>
-		<div id="remoteContainer">
-		<div id="remoteTitle" class="title title-border-top title-border-bottom">#{if user}Connected as ${user.username}#{/if}#{else}Not connected#{/else}</div>
-		<div id="remote">
-		<div id="users">dfsafdsafdsa </div>
-		<div id="events"> fsdafdsafdsafd</div>
-		</div>
-		</div>
+		<div id="sb-footer"#{if !user} class="initfadein"#{/if}>
 		<div id="footerControls" class="title title-border-top">
 		<form>
 		<fieldset>
@@ -76,10 +70,9 @@
 		<input type="checkbox" id="playRemoteOption"#{ifnot user} disabled="disabled"#{/ifnot} /> <span#{ifnot user} class="disabled-label"#{/ifnot}>Play Remote</span>
 		</fieldset>
 		</form>
-		<a href="#" id="remoteToggle" class="ui-icon ui-icon-plusthick"></a>
 		</div>
-		</div> <!-- footer -->
-		</div> <!-- main -->
+		</div> <!-- sb-footer -->
+		</div> <!-- sb-main -->
 		#{include "Board/login-snippet.html" /}
     </body>
 </html>

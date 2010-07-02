@@ -1,19 +1,59 @@
 <html>
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery-1.4.2.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="jquery.govertical.js" type="text/javascript" charset="utf-8"></script>
 <script src="jquery.relayout.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery.drawer.js" type="text/javascript" charset="utf-8"></script>
 <script src="jquery.metadata.min.js" type="text/javascript" charset="utf-8"></script>
 
 <script type="text/javascript" charset="utf-8">
 	$(function() {
-//		var content = $("#content");
+		console.log($("head").offset().top);
+		//		var content = $("#content");
 //		var fn = function() {
 //			content.govertical({boundary: ["#remote"]});
 //		}
 //		fn();
 //		$(window).resize(fn);
 		$(".govertical").goVertical();
+		$("#remote").drawer({
+			collisionDetector: function(args) {
+				var $container = this;
+				var handleHeight = $("#remoteHandle").outerHeight(false);
+				if (args.innerHeightNew < handleHeight) {
+					return handleHeight;
+				}
+				var $organizer = $("#organizer");
+				if ($organizer.drawerDragging()) return;
+				var organizerBottom = $organizer.offset().top + $organizer.outerHeight(false);
+				if (args.topNew < organizerBottom) {
+					var diff = organizerBottom - args.topNew;
+					$organizer.drawerMoveIn(diff);
+					organizerBottom = $organizer.offset().top + $organizer.outerHeight(false);
+					return (args.topStart - organizerBottom) + args.innerHeightStart;
+				}
+			}
+		});
+		$("#organizer").drawer({
+			direction: "down",
+			collisionDetector: function(args) {
+			var $container = this;
+			var handleHeight = $("#organizerHandle").outerHeight(false);
+			if (args.innerHeightNew < handleHeight) {
+				return handleHeight;
+			}
+			var $remote = $("#remote");
+			if ($remote.drawerDragging()) return;
+			var remoteTop = $remote.offset().top;
+			if (args.bottomNew > remoteTop) {
+				var diff = args.bottomNew - remoteTop;
+				$remote.drawerMoveIn(diff);
+				remoteTop = $remote.offset().top;
+				return (remoteTop - args.bottomStart) + args.innerHeightStart;
+			}
+		}
+		});
+		
 	});
 </script>
 
@@ -32,10 +72,18 @@ padding: 5px;
 
 #organizer {
     background-color: green;
+    position: relative;
+    padding: 10px;
+}
+
+#organizerHandle {
+	background-color: purple;
+	position: absolute;
+	bottom: 0px;
+	display: inline-block;
 }
 
 #content {
-    min-height: 50%;
     background-color: orange;
 	margin: 5px;
 }
@@ -49,6 +97,11 @@ padding: 5px;
 #remote {
     background-color: red;
 	margin: 5px;
+	padding: 10px;
+}
+
+#remoteHandle {
+	background-color: blue;
 }
 
 #footer {
@@ -58,11 +111,16 @@ padding: 5px;
 </head>
 <body>
 <div id="head">Header</div>
-<div id="organizer">Organizer</div>
-<div id="content" class="govertical {boundary: ['#remote', '#bottom'], includeMargins: false}"></div>
+<div id="organizer">Organizer
+<div id="organizerHandle" class="drawer-handle">Handle</div>
+</div>
+<div id="content" class="govertical {boundary: ['#bottom'], includeMargins: true}"></div>
 
 <div id="bottom">
-<div id="remote">Remote</div>
+<div id="remote">
+<div id="remoteHandle" class="drawer-handle">Handle</div>
+Remote
+</div>
 <div id="footer">Footer</div>
 </div>
 </body>
