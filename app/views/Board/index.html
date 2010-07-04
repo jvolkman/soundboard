@@ -53,7 +53,7 @@
 		#{if user}
 		<div id="addSound">
 			#{form @Sounds.addSounds(), enctype:"multipart/form-data" }
-				<input type="file" name="soundFiles" multiple />
+				<input type="file" id="soundFiles" name="soundFiles" multiple />
 				<input type="submit" />
 			#{/form}
 		</div>

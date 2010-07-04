@@ -31,6 +31,7 @@ import play.Play;
 import play.data.Upload;
 import play.data.validation.Required;
 import play.mvc.*;
+import play.mvc.Http.Header;
 
 @With(Auth.class)
 public class Sounds extends Controller {
@@ -68,11 +69,24 @@ public class Sounds extends Controller {
     }
     
     @Unguarded
+    public static void headFile(Long soundId) {
+        System.out.println("HEAD");
+    }
+
+    @Unguarded
     public static void getFile(Long soundId) {
+//        response.setHeader("Accept-Ranges", "bytes");
         Sound sound = Sound.findById(soundId);
         if (sound == null) {
             notFound();
         } else {
+            response.cacheFor(sound.addedDate.toString(), "1d", sound.addedDate.getTime());
+            response.contentType = sound.mime;
+            System.out.println("Sending sound: " + soundId + "(" + request.method + ")");
+            for (Header h : request.headers.values()) {
+                System.out.println(h.name + ": " + h.value());
+            }
+            System.out.println();
             renderBinary(new ByteArrayInputStream(sound.data), sound.data.length);
         }
     }
@@ -104,7 +118,7 @@ public class Sounds extends Controller {
         for (Upload file : soundFiles) {
         	byte[] soundBytes = file.asBytes();
             String name = file.getFileName();
-            Sound sound = new Sound(name, "mp3", user, request.date, soundBytes).save();
+            Sound sound = new Sound(name, "audio/mpeg", user, request.date, soundBytes).save();
             result.add(new SerializableSound(sound));
         }
         renderJSON(result);
